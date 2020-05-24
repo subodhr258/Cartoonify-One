@@ -5,7 +5,7 @@ cap = cv2.VideoCapture(0)
 
 #If you just want to input an image in your files:
 #example: img = cv2.imread("adventure.jpeg")
-
+i=1
 while True: 
 	# Capture frame-by-frame
 	ret, img = cap.read()
@@ -22,17 +22,27 @@ while True:
 	# 3) Cartoon
 	cartoon = cv2.bitwise_and(color, color, mask=edges)
 
+	font = cv2.FONT_HERSHEY_SIMPLEX 
 
+	cv2.putText(cartoon,"Press Q to exit, C to capture and save frame",(150,20),font,0.5,(0,255,255),1,cv2.LINE_4)
 	#cv2.imshow("Image", img)
 	#cv2.imshow("color", color)
 	#cv2.imshow("edges", edges)
 	cv2.imshow("Cartoon", cartoon)
 
-	if cv2.waitKey(1) & 0xFF == ord('q'):
+	key = cv2.waitKey(1)
+
+	if key == ord('c'): 
+		cv2.imwrite('Capture'+str(i)+'.jpg',cartoon)
+		i+=1
+
+	if key == ord('q'):
 		break
 
 cap.release()
 cv2.destroyAllWindows()
+
+
 
 # import numpy as np
 # import cv2
